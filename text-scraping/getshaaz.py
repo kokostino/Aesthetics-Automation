@@ -9,7 +9,7 @@ def log_in(usrnme, psswrd):
     
     driver.get("https://www.instagram.com")
     time.sleep(2)
-    # cookie 
+    
     cookie_button = driver.find_element_by_xpath("//button[text()='Alle annehmen']")
     cookie_button.click()
     
@@ -24,7 +24,7 @@ def log_in(usrnme, psswrd):
     login_button.click()
     
     time.sleep(3)
-    # not now
+    
     save_login_info_button= driver.find_element_by_xpath("//button[text()='Jetzt nicht']")
     save_login_info_button.click()
     time.sleep(4)
@@ -52,8 +52,11 @@ def insta_comment(urls):
     post_comments = []
     for link in urls:
         driver.get(link)
-        comment = driver.find_elements_by_xpath('//div[@class="C4VMK"]//span')[2].text
-        post_comments.append(comment)
+        try:
+            comment = driver.find_elements_by_xpath('//div[@class="C4VMK"]//span')[2].text
+            post_comments.append(comment)
+        except:
+            print(link+" does not work")
         time.sleep(7)
     return post_comments
 
@@ -65,8 +68,8 @@ def write_to_txt_file(liste,file_name):
     textfile.close()
     
 log_in(MEIN_ACCOUNT,MEIN_PASSWORT)
-time.sleep(2)
+time.sleep(20)
 post_links=get_all_posts(USERSEITE, 700)
 time.sleep(5)
-full_text=insta_comment(post_links[:5])
+full_text=insta_comment(post_links)
 write_to_txt_file(full_text,FILENAME)
