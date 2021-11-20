@@ -57,10 +57,10 @@ def insta_comment(urls):
         time.sleep(7)
     return post_comments
 
-def write_to_txt_file(list,file_name):
+def write_to_txt_file(liste,file_name):
     
     textfile = open(file_name, "w+")
-    for element in list:
+    for element in liste:
         textfile.write(element + "\n")
     textfile.close()
     
