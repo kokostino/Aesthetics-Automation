@@ -1,4 +1,7 @@
 # Byte-compiled / optimized / DLL files
+
+/colour-to-database/Images
+
 __pycache__/
 *.py[cod]
 *$py.class
