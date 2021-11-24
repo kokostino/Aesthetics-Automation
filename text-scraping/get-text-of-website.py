@@ -2,6 +2,7 @@ from selenium import webdriver
 import os
 import time
 
+os.chdir('C:\\Users\\dherschmann\\Documents\\GitHub\\Instagram-Automation\\text-scraping')
 file_path = os.getcwd()
 driver = webdriver.Chrome(file_path+'/chromedriver.exe')
 
@@ -23,53 +24,45 @@ def log_in(usrnme, psswrd):
     login_button =driver.find_element_by_xpath("//button[@type='submit']")
     login_button.click()
     
-    time.sleep(3)
+    time.sleep(5)
     
     save_login_info_button= driver.find_element_by_xpath("//button[text()='Jetzt nicht']")
     save_login_info_button.click()
-    time.sleep(4)
+    time.sleep(7)
     notification_button= driver.find_element_by_xpath("//button[text()='Jetzt nicht']")
     notification_button.click()
-    
-def get_all_posts(username, anzahl):
-    
-    driver.get("https://www.instagram.com/"+username+"/?hl=en")
-    post = 'https://www.instagram.com/p/'
-    post_links = []
-    while len(post_links) < anzahl:
-        links = [a.get_attribute('href') for a in driver.find_elements_by_tag_name('a')]
-        for link in links:
-            if post in link and link not in post_links:
-                post_links.append(link)
-        scroll_down = "window.scrollTo(0, document.body.scrollHeight);"
-        driver.execute_script(scroll_down)
-        time.sleep(6)
-    else:
-        return post_links[:anzahl]
-    
-def insta_comment(urls):
-    
+
+def insta_comment(usrnme, psswrd, urls):
+    log_in(usrnme, psswrd)
     post_comments = []
     for link in urls:
         driver.get(link)
+#        cookie_button = driver.find_element_by_xpath("//button[text()='Accept All']")
+#        cookie_button.click()
         try:
             comment = driver.find_elements_by_xpath('//div[@class="C4VMK"]//span')[2].text
             post_comments.append(comment)
         except:
             print(link+" does not work")
-        time.sleep(7)
+        time.sleep(10)
     return post_comments
 
 def write_to_txt_file(liste,file_name):
     
-    textfile = open(file_name, "w+")
+    textfile = open(file_name, "a+")
     for element in liste:
         textfile.write(element + "\n")
     textfile.close()
     
-log_in(MEIN_ACCOUNT,MEIN_PASSWORT)
-time.sleep(20)
-post_links=get_all_posts(USERSEITE, 700)
-time.sleep(5)
-full_text=insta_comment(post_links)
-write_to_txt_file(full_text,FILENAME)
+def read_from_file(file):   
+    site_list=[]
+    with open(file) as f:
+        for line in f:
+            li = [l.strip() for l in line.split('\n')]
+            site_list.append(li[0])
+        return site_list
+    
+post_links = read_from_file("websites-shaaz.txt")
+
+full_text=insta_comment(MYUSERNAME, MYPASSWORD, post_links)
+write_to_txt_file(full_text,"shaaz-text.txt")
