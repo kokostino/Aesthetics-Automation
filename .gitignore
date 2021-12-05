@@ -1,6 +1,10 @@
 # Byte-compiled / optimized / DLL files
 
 /colour-to-database/Images
+/content-classifier/allnieve
+/content-classifier/allnone
+/content-classifier/allpalms
+/posted-pics
 
 __pycache__/
 *.py[cod]
