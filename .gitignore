@@ -5,6 +5,7 @@
 /content-classifier/allnone
 /content-classifier/allpalms
 /posted-pics
+/database/Favs
 
 __pycache__/
 *.py[cod]
