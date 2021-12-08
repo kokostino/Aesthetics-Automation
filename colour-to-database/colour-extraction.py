@@ -86,7 +86,8 @@ def write_colour_data_to_database(colour_info):
 
         cur.execute('''INSERT OR IGNORE INTO IMAGE_INFO (IMAGE_NAME, IMAGE_COLOUR) VALUES (?,?)''',
         (name, colours))
-
+        cur.execute('''UPDATE IMAGE_INFO SET IMAGE_COLOUR = ? WHERE IMAGE_NAME=?''',
+        (colours, name))
     conn.commit()
     
 def write_to_file(content, file):    
@@ -108,16 +109,18 @@ def read_from_file(file):
             
 os.chdir('C:\\Users\\dherschmann\\Documents\\GitHub\\Instagram-Automation')    
     
-image_names=glob.glob("colour-to-database/Images/*.jpg")
+image_names=glob.glob("colour-to-database/Images/*.*")
 
 for image in read_from_file('database/colours.csv'):
-        image_names.remove('colour-to-database/'+image) 
-
+    try:
+        image_names.remove('colour-to-database/'+image)
+    except:
+        print(image+' not in folder')
+        
 #scale down images to 20x20 pixels
 for i in image_names:
     pixel_distances_within_image(i).smallify_image(20)
-
-
+    
 list_of_problematic_images=[]
 colour_info=[]
 

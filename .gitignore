@@ -6,6 +6,8 @@
 /content-classifier/allpalms
 /posted-pics
 /database/Favs
+/text-scraping/chromedriver.exe
+/database/*.sqlite
 
 __pycache__/
 *.py[cod]
