@@ -49,16 +49,17 @@ def similarity_vec(lab1,lab2,smlrty_threshold):
             sim_vec.append(0)
     return sim_vec 
 
+sim=pd.DataFrame(index=names, columns=names)
+
+for i in range(0,len(SnowList)-1):
     
-data=[]
-for i in range(0,len(SnowList)):
-    l=[]
-    for j in range(0,len(SnowList)):
-        sm=sum(similarity_vec(pxl_of_image(i),pxl_of_image(j),2.5))
-        l.append(sm)
-    data.append(l)
-    
-sim=pd.DataFrame(data=data,index=names, columns=names)
+    for j in range(i,len(SnowList)):
+        if j==i:
+            sim.at[names[i],names[j]] = 10/2
+        else:
+            sim.at[names[i],names[j]] = sum(similarity_vec(pxl_of_image(i),pxl_of_image(j),3.5))
+sim=sim.fillna(0)+sim.T.fillna(0)    
+
 
 kmeans = KMeans(n_clusters=10, random_state=0).fit(sim)
 try:
