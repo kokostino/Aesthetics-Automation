@@ -9,6 +9,7 @@
 /database/Favs
 /text-scraping/chromedriver.exe
 /database/*.sqlite
+.DS_Store
 
 __pycache__/
 *.py[cod]
