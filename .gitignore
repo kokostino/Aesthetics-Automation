@@ -10,6 +10,10 @@
 /text-scraping/chromedriver.exe
 /database/*.sqlite
 .DS_Store
+/content-classifier/instapalm/
+/content-classifier/instanieve/
+/content-classifier/palmtree/
+/content-classifier/cross_country_ski_nature/
 
 __pycache__/
 *.py[cod]
